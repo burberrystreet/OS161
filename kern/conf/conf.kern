@@ -385,6 +385,7 @@ file      syscall/file_syscalls.c
 
 file      startup/main.c
 file      startup/menu.c
+file      startup/hello.c
 
 ########################################
 #                                      #
@@ -442,6 +443,9 @@ optfile net	test/nettest.c
 # UW Mod
 file    test/uw-tests.c
 
+# Megan's test code
+file     test/threadfun.c
+file     test/threadfun2.c
 
 # UW options for different assignments
 defoption A0

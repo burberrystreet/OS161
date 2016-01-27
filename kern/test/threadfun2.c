@@ -50,10 +50,20 @@ static void threadfun2(int nThreads, int loopBound) {
 
 int threadtest5(int nargs, char **args) {
 
-	(void)nargs;
-	
+	int loopBound;
+
+	if (nargs != 3 && nargs != 2) {
+		kprintf("Usage: tt5 [int] [optional int]");
+		return 0;
+	}
+
+	if (nargs == 3) {
+		loopBound = atoi(args[2]);
+	} else {
+		loopBound = 10000;
+	}
+
 	int nThreads = atoi(args[1]);
-	int loopBound = atoi(args[2]);
 
 	init_sem();
 	kprintf("Starting thread test...\n");

@@ -18,7 +18,6 @@
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED.  IN NO EVENT SHALL THE UNIVERSITY OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
@@ -50,7 +49,6 @@
 #include <test.h>
 #include <version.h>
 #include "autoconf.h"  // for pseudoconfig
-
 
 /*
  * These two pieces of data are maintained by the makefiles and build system.
@@ -103,6 +101,9 @@ boot(void)
 
 	kprintf("Megan Morton's system version %s (%s #%d)\n", 
 		GROUP_VERSION, buildconfig, buildversion);
+
+	hello();
+
 	kprintf("\n");
 
 	/* Early initialization. */
@@ -206,7 +207,7 @@ void
 kmain(char *arguments)
 {
 	boot();
-
+	
 	menu(arguments);
 
 	/* Should not get here */
