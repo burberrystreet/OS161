@@ -4,7 +4,7 @@
 #include <synch.h>
 #include <test.h>
 
-static int unsafethreadcounter;
+static int counter;
 
 static struct semaphore *tsem = NULL;
 
@@ -17,14 +17,14 @@ static void init_sem(void) {
 	}
 }
 
-static void mythread2(void *junk, unsigned long num) {
+static void unsafethreadcounter(void *junk, unsigned long num) {
 	int i;
 	int loopBound = (int) num;
 
 	(void)junk;
 
 	for (i=0; i<loopBound; i++) {
-		unsafethreadcounter++;
+		counter++;
 	}
 
 	V(tsem);
@@ -36,7 +36,7 @@ static void threadfun2(int nThreads, int loopBound) {
 
 	for (i=0; i<nThreads; i++) {
 		snprintf(name, sizeof(name), "threadtest%d", i);
-		result = thread_fork(name, NULL, mythread2, NULL, loopBound);
+		result = thread_fork(name, NULL, unsafethreadcounter, NULL, loopBound);
 		if (result) {
 			panic("threadtest: thread_fork failed %s)\n", strerror(result));
 		}
@@ -49,7 +49,7 @@ static void threadfun2(int nThreads, int loopBound) {
 }
 
 int threadtest5(int nargs, char **args) {
-
+	counter = 0;
 	int loopBound;
 
 	if (nargs != 3 && nargs != 2) {
@@ -69,6 +69,7 @@ int threadtest5(int nargs, char **args) {
 	kprintf("Starting thread test...\n");
 	threadfun2(nThreads, loopBound);
 	kprintf("\nThread test done.\n");
-   kprintf("\nThe value of the counter is %d. \n", unsafethreadcounter);
+   kprintf("\nThe value of the counter should be %d. \n", loopBound*nThreads);
+	kprintf("\nThe value of the counter is %d. \n", counter);
 	return 0;
 }
