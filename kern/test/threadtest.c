@@ -39,6 +39,7 @@
 #define NTHREADS  8
 
 static struct semaphore *tsem = NULL;
+static struct semaphore *psem = NULL;
 
 static
 void
@@ -47,6 +48,12 @@ init_sem(void)
 	if (tsem==NULL) {
 		tsem = sem_create("tsem", 0);
 		if (tsem == NULL) {
+			panic("threadtest: sem_create failed\n");
+		}
+	}
+	if (psem==NULL) {
+		psem = sem_create("psem",1);
+		if (psem == NULL) {
 			panic("threadtest: sem_create failed\n");
 		}
 	}
@@ -61,9 +68,12 @@ loudthread(void *junk, unsigned long num)
 
 	(void)junk;
 
+	P(psem);
 	for (i=0; i<120; i++) {
 		putch(ch);
 	}
+	V(psem);
+
 	V(tsem);
 }
 
@@ -86,9 +96,11 @@ quietthread(void *junk, unsigned long num)
 
 	(void)junk;
 
+	P(psem);
 	putch(ch);
 	for (i=0; i<200000; i++);
 	putch(ch);
+	V(psem);
 
 	V(tsem);
 }
