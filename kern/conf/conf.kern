@@ -446,6 +446,8 @@ file    test/uw-tests.c
 # Megan's test code
 file     test/threadfun.c
 file     test/threadfun2.c
+file		test/threadlock.c
+file		test/threadprint.c
 
 # UW options for different assignments
 defoption A0

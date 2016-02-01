@@ -456,12 +456,16 @@ static const char *testmenu[] = {
 	"[bt]  Bitmap test                   ",
 	"[km1] Kernel malloc test            ",
 	"[km2] kmalloc stress test           ",
-	"[tt1] Thread test 1                 ",
-	"[tt2] Thread test 2                 ",
+	"[tt1] Thread test 1 (sem)           ",
+	"[tt2] Thread test 2 (sem)           ",
 	"[tt3] Thread test 3                 ",
-	"[tt4] Thread test 4                 ",
-   "[tt5] Thread test 5                 ",
-	"[tt6] Thread test 6                 ",
+	"[tt4] Thread test 4 (locks)         ",
+   "[tt5] Unsafe thread counter         ",
+	"[tt6] Safe thread counter (sem)     ",
+   "[tt7] Slow safe counter (sem)       ",
+   "[tt8] Fast safe counter (locks)     ",
+	"[tt9] Slow safe counter (locks)     ",
+   "[tt0] Thread print                  ",
 #if OPT_NET
 	"[net] Network test                  ",
 #endif
@@ -577,6 +581,10 @@ static struct {
 	{ "tt4", threadtest4 },
 	{ "tt5", threadtest5 },
 	{ "tt6", threadtest6 },
+	{ "tt7", threadtest7 },
+	{ "tt8", threadtest8 },
+	{ "tt9", threadtest9 },
+	{ "tt0", threadtest0 },
 	{ "sy1",	semtest },
 
 	/* synchronization assignment tests */

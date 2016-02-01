@@ -5,7 +5,6 @@
 #include <test.h>
 
 static struct semaphore *tsem = NULL;
-static struct lock *lk = NULL;
 
 static void init_sem(void) {
 	if (tsem == NULL) {
@@ -16,37 +15,22 @@ static void init_sem(void) {
 	}
 }
 
-static void init_lock(void) {
-	if (lk == NULL) {
-		lk = lock_create("lk");
-		if (lk == NULL) {
-			panic("threadtest: lock_create failed\n");
-		}
-	}
-}
-
-static void mythread(void *junk, unsigned long num) {
-	int ch = '0' + num;
-	int i;
-
+static void testingprint(void *junk, unsigned long num) {
+	(void)num;
 	(void)junk;
 
-	lock_acquire(lk);
-	for (i=0; i<100; i++) {
-		putch(ch);
-	}
-	lock_release(lk);
+	kprintf("This is a test of kprintf\n");
 
 	V(tsem);
 }
 
-static void threadfun(int nThreads) {
+static void threadprinttest(int nThreads) {
 	char name[16];
 	int i, result;
 
 	for (i=0; i<nThreads; i++) {
 		snprintf(name, sizeof(name), "threadtest%d", i);
-		result = thread_fork(name, NULL, mythread, NULL, i);
+		result = thread_fork(name, NULL, testingprint, NULL, i);
 		if (result) {
 			panic("threadtest: thread_fork failed %s)\n", strerror(result));
 		}
@@ -58,10 +42,10 @@ static void threadfun(int nThreads) {
 
 }
 
-int threadtest4(int nargs, char **args) {
+int threadtest0(int nargs, char **args) {
 	
 	if (nargs != 2) {
-		kprintf("Usage: tt4 [int]");
+		kprintf("Usage: tt0 [int]");
 		return 0;
 	}
 
@@ -70,9 +54,8 @@ int threadtest4(int nargs, char **args) {
 	int nThreads = atoi(args[1]);
 
 	init_sem();
-   init_lock();
 	kprintf("Starting thread test...\n");
-	threadfun(nThreads);
+	threadprinttest(nThreads);
 	kprintf("\nThread test done.\n");
 
 	return 0;
