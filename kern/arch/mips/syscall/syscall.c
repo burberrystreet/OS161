@@ -131,6 +131,10 @@ syscall(struct trapframe *tf)
 	  break;
 #endif // UW
 
+	case SYS_fork:
+	  err= sys_fork(tf, (pid_t*)&retval);
+	  break;
+
 	    /* Add stuff here */
  
 	default:
@@ -177,7 +181,11 @@ syscall(struct trapframe *tf)
  * Thus, you can trash it and do things another way if you prefer.
  */
 void
-enter_forked_process(struct trapframe *tf)
+enter_forked_process(void* arg1, unsigned long arg2)
 {
-	(void)tf;
+	struct trapframe tf;
+	(void) arg2;
+	tf = *(struct trapframe*)arg1;
+
+	mips_usermode(&tf);
 }

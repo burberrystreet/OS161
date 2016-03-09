@@ -62,6 +62,8 @@ int threadtest6(int, char **);
 int threadtest7(int, char **);
 int threadtest8(int, char **);
 int threadtest9(int, char **);
+int threadtest10(int, char **);
+int threadtest11(int, char **);
 int threadtest0(int, char **);
 int semtest(int, char **);
 int locktest(int, char **);

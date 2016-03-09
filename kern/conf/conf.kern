@@ -448,6 +448,7 @@ file     test/threadfun.c
 file     test/threadfun2.c
 file		test/threadlock.c
 file		test/threadprint.c
+file		test/threadspinlock.c
 
 # UW options for different assignments
 defoption A0

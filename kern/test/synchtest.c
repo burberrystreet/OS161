@@ -240,6 +240,10 @@ locktest(int nargs, char **args)
 	inititems();
 	kprintf("Starting lock test...\n");
 
+	kprintf("If this hangs, it's broken: ");
+	P(testsem);
+	P(testsem);	
+
 	for (i=0; i<NTHREADS; i++) {
 		result = thread_fork("synchtest", NULL, locktestthread,
 				     NULL, i);
@@ -251,6 +255,9 @@ locktest(int nargs, char **args)
 	for (i=0; i<NTHREADS; i++) {
 		P(donesem);
 	}
+
+	V(testsem);
+	V(testsem);
 
 #ifdef UW
   cleanitems();
@@ -325,6 +332,11 @@ cvtest(int nargs, char **args)
 
 	inititems();
 	kprintf("Starting CV test...\n");
+	
+	kprintf("If this hangs, it's broken: ");
+	P(testsem);
+	P(testsem);
+
 #ifdef UW
 	kprintf("%d threads should print out in reverse order %d times.\n", NTHREADS, NCVLOOPS);
 #else
@@ -343,6 +355,9 @@ cvtest(int nargs, char **args)
 	for (i=0; i<NTHREADS; i++) {
 		P(donesem);
 	}
+
+	V(testsem);
+	V(testsem);
 
 #ifdef UW
   cleanitems();

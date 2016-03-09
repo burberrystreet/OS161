@@ -465,7 +465,9 @@ static const char *testmenu[] = {
    "[tt7] Slow safe counter (sem)       ",
    "[tt8] Fast safe counter (locks)     ",
 	"[tt9] Slow safe counter (locks)     ",
-   "[tt0] Thread print                  ",
+   "[tt10] Fast counter (spinlocks)     ",
+	"[tt11] Slow counter (spinlocks)     ",
+	"[tt0] Thread print                  ",
 #if OPT_NET
 	"[net] Network test                  ",
 #endif
@@ -584,6 +586,8 @@ static struct {
 	{ "tt7", threadtest7 },
 	{ "tt8", threadtest8 },
 	{ "tt9", threadtest9 },
+	{ "tt10", threadtest10 },
+	{ "tt11", threadtest11 },
 	{ "tt0", threadtest0 },
 	{ "sy1",	semtest },
 
